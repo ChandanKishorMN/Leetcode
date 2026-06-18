@@ -1,0 +1,32 @@
+import java.util.*;
+
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        solve(0, candidates, target, new ArrayList<>(), result);
+        return result;
+    }
+
+    private void solve(int index, int[] candidates, int target,
+                       List<Integer> current,
+                       List<List<Integer>> result) {
+
+        // Base case
+        if (index == candidates.length) {
+            if (target == 0) {
+                result.add(new ArrayList<>(current));
+            }
+            return;
+        }
+
+        // Pick current element
+        if (candidates[index] <= target) {
+            current.add(candidates[index]);
+            solve(index, candidates, target - candidates[index], current, result);
+            current.remove(current.size() - 1);
+        }
+
+        // Don't pick current element
+        solve(index + 1, candidates, target, current, result);
+    }
+}
